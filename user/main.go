@@ -3,8 +3,12 @@ package main
 import (
 	"common/config"
 	"common/metrics"
+	"context"
 	"flag"
 	"fmt"
+	"log"
+	"os"
+	"user/app"
 )
 
 var configFile = flag.String("config", "application.yml", "config file")
@@ -22,5 +26,9 @@ func main() {
 		}
 	}()
 	// 3. 启动grpc服务
-	select {}
+	err := app.Run(context.Background())
+	if err != nil {
+		log.Println(err)
+		os.Exit(-1)
+	}
 }
